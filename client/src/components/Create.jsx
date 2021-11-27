@@ -28,6 +28,7 @@ import { createVideogame, getGenres } from '../actions';
         }
     return errors;
     }
+// FUNCTION TO EXPORT - COMPONENT CREATE
 export default function Create(){
     // STATES AND CONSTANTS
     const [form,setForm]=useState({
@@ -43,7 +44,7 @@ export default function Create(){
 
     const genres = useSelector(state=>state.genres);
     const dispatch = useDispatch();
-    useEffect(()=>{dispatch(getGenres())},[]);
+    useEffect(()=>{dispatch(getGenres())},[dispatch]);
     const genresNames = genres.map(g=>g.name);
     const today = new Date();
     // --- FUNCTIONS ----

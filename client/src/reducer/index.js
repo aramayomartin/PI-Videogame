@@ -26,6 +26,11 @@ function reducer(state = initialState,action){
                 ...state,
                 searchByName:[]
             }
+        case 'CLEAN_DETAIL':
+            return {
+                ...state,
+                detail:{}
+            }
         case 'GET_GENRES':
             return{
                 ...state,
@@ -36,7 +41,7 @@ function reducer(state = initialState,action){
         case 'GET_DETAIL':
             return {
                 ...state,
-                detail : action.payload
+                detail : Array.isArray(action.payload)?action.payload[0]:action.payload
             }
         default:
             return state;

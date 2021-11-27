@@ -8,7 +8,7 @@ export default function Genres(){
     // HOOKS 
     const dispatch = useDispatch();
     const genres = useSelector((state) => state.genres);
-    useEffect(()=>{dispatch(getGenres())},[]);
+    useEffect(()=>{dispatch(getGenres())},[dispatch]);
 
 
     return(

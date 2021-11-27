@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // Actions
-import {cleanSearchByName, getAllVideogames, getGenres} from '../actions';
+import {cleanDetail, cleanSearchByName, getAllVideogames, getGenres} from '../actions';
 import Card from './Card';
 import Pages from './Pages';
 import SearchBar from './SearchBar';
@@ -14,25 +14,27 @@ export default function Home(){
    const allVideogames = useSelector((state) => state.videogames);
    const foundByName = useSelector(state=>state.searchByName);
    const genres = useSelector(state=>state.genres);
-   useEffect(()=>{dispatch(getAllVideogames())},[]);
-   useEffect(()=>{dispatch(getGenres())},[]);
+   useEffect(()=>{dispatch(getAllVideogames())},[dispatch]);
+   useEffect(()=>{dispatch(getGenres())},[dispatch]);
+   useEffect(()=>{dispatch(cleanDetail())},[dispatch]);
 
     // --- Constants and states ---
     const genresNames = genres.map(g=>g.name);
     const [page,setPage] = useState(1);
-    const [videogamesPerPage, setVideogamesPerPage] = useState(15);
+    const [videogamesPerPage, _] = useState(15);
     const lastVideogameToShow = page*videogamesPerPage;
     const firstVideogameToShow = lastVideogameToShow-videogamesPerPage;
     //const currentVideogamesToShow = allVideogames.slice(firstVideogameToShow,lastVideogameToShow);
     // to filters
     const [filter,setFilter] = useState('');
-    const [genreFilter, setGenreFilter] = useState('Strategy');
+    const [genreFilter, setGenreFilter] = useState('Action');
     const [order, setOrder] = useState('');
     // --- FUNCTIONS ---
     function handleButtonReaload(e) {
         e.preventDefault();
         dispatch(cleanSearchByName());
         dispatch(getAllVideogames());
+        dispatch(cleanDetail());
         setPage(1);
         setGenreFilter('');
         setFilter('');
@@ -68,7 +70,7 @@ export default function Home(){
     var vg2 = []; // array post first filter - show by genre or created in our database
     switch(filter){
         case 'Genres':
-            vg2 = vg1.filter(v=>v.genres.includes(genreFilter));
+            vg2 = vg1.filter(v=>v.genres.includes(genreFilter) || v.genres.map(e=>e.name).includes(genreFilter));
             break;
         case 'Created':
             vg2 = vg1.filter(v=>v.id.length>7);

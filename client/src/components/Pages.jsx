@@ -12,7 +12,7 @@ export default function Pages({videogamesPerPage,toShow,changePage}){
                 {
                     pages.map(n=> (
                     <ul>
-                        <li key={n}><a onClick={()=>changePage(n)}>{n}</a></li>
+                        <li key={String(n)}><a onClick={()=>changePage(n)}>{n}</a></li>
                     </ul>
                     ))
                 }

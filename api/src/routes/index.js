@@ -101,7 +101,7 @@ router.get('/videogame/:id',async(req,res)=>{
                 released: e.released,
                 image: e.background_image,
                 rating: e.rating,
-                platform: e.parent_platforms.map(p=>p.platform.name),
+                platforms: e.parent_platforms.map(p=>p.platform.name),
                 genres: e.genres.map(p=>p.name),
                 id: e.id
             };
