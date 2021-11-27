@@ -2,6 +2,8 @@ require('dotenv').config();
 const { Router } = require('express');
 const {Videogame,Genres} = require('../db');
 const axios = require('axios').default;
+const { Op } = require('sequelize');
+
 const {
     API_KEY,
   } = process.env;
@@ -23,7 +25,9 @@ router.get('/videogames',async(req,res)=>{
         if(name){ 
             // DB search
             let gameByNameInDB = await Videogame.findAll({
-                where:{name:name},
+                where:{
+                    name: { [Op.iLike]: '%' + name + '%' },
+                },
                 include: Genres
             })
             // API search
@@ -51,8 +55,9 @@ router.get('/videogames',async(req,res)=>{
             // I'm going to show the first 50 pages.
             // games in API - first 50 pages
             let showVideogamesF50P =[];
-            for(let i =0;i<2;i++){
-                let allVideogames = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
+            let URL = `https://api.rawg.io/api/games?key=${API_KEY}`;
+            for(let i =0;i<5;i++){
+                let allVideogames = await axios.get(URL);
                 const videogames = await allVideogames.data.results.map(e=>{
                     return {
                         name: e.name,
@@ -63,7 +68,7 @@ router.get('/videogames',async(req,res)=>{
                     };
                 })
                 showVideogamesF50P = showVideogamesF50P.concat(videogames);
-                allVideogames=allVideogames.data.next;
+                URL=allVideogames.data.next;
             }
             // returning 
             const toReturn = allVideogamesInDB.concat(showVideogamesF50P);
@@ -85,6 +90,7 @@ router.get('/videogame/:id',async(req,res)=>{
                 where: {id:id},
                 include: Genres
             })
+            console.log(getByIDFromDB);
             return res.status(200).send(getByIDFromDB);
         }else{
             // id provided is from a api videogame - Search in API
@@ -112,16 +118,16 @@ router.get('/genres', async (_, res) => {
       const genresNames = genreAPI.results.map(e=>{
           return{
               name:e.name,
-              id:e.id,
-              games: e.games.map(g=>g.name)
+              //id:e.id,
+              //games: e.games.map(g=>g.name)
           }
       });
       genresNames.forEach(gn => {
           Genres.findOrCreate({
               where:{
                   name:gn.name,
-                  id:String(gn.id),
-                  games:gn.games
+                  //id:String(gn.id),
+                  //games:gn.games
               }
           })
       });

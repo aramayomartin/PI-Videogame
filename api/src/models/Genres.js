@@ -4,11 +4,11 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('genres', {
-    id:{
+/*     id:{
       type: DataTypes.STRING,
       allowNull:false,
       primaryKey: true
-    },
+    }, */
     name: {
       type: DataTypes.ENUM(
         'Action',
@@ -32,9 +32,14 @@ module.exports = (sequelize) => {
         'Card'),
       allowNull: false,
     },
-    games: {
+/*     games: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
-    }
-  });
+    }, */
+    
+  },
+  {
+    timestamps: false
+  }
+);
 };
