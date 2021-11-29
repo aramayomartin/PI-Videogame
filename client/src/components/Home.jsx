@@ -1,6 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-//hooks
+import styles from '../styles/Home.module.css';
+// icons
+import {IoMdAdd} from 'react-icons/io';
+import {AiOutlineReload} from 'react-icons/ai';
+import {FaRandom} from 'react-icons/fa';
+//hooks ftom
 import { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // Actions
@@ -24,10 +29,9 @@ export default function Home(){
     const [videogamesPerPage, _] = useState(15);
     const lastVideogameToShow = page*videogamesPerPage;
     const firstVideogameToShow = lastVideogameToShow-videogamesPerPage;
-    //const currentVideogamesToShow = allVideogames.slice(firstVideogameToShow,lastVideogameToShow);
     // to filters
     const [filter,setFilter] = useState('');
-    const [genreFilter, setGenreFilter] = useState('Action');
+    const [genreFilter, setGenreFilter] = useState('-');
     const [order, setOrder] = useState('');
     // --- FUNCTIONS ---
     function handleButtonReaload(e) {
@@ -61,6 +65,11 @@ export default function Home(){
             if (a.name < b.name) {return -1;}
             return 0;
     }
+    function orderRatingFunction(a,b){
+        if (parseFloat(a.rating) > parseFloat(b.rating)) {return 1;}
+        if (parseFloat(a.rating) < parseFloat(b.rating)) {return -1;}
+        return 0;
+    }
     // What will we show?
     // if exists some search by name, then we will show those games, but if it doesn't exist
     // we have to show all videogames and the filters must be applicated over the games to show.
@@ -87,15 +96,21 @@ export default function Home(){
     }
     switch(order){
         case 'asc':
-            vg2.sort(orderFunction);      
+            vg2.sort(orderFunction); 
             break;      
         case 'des':
             vg2.sort(orderFunction).reverse();
             break;
+        case 'ascR':
+            vg2.sort(orderRatingFunction);
+            break;
+        case 'desR':
+            vg2.sort(orderRatingFunction).reverse();
+            break;
         default:
             break;
     }
-    var toShow = vg2;
+    var toShow = vg2;     
     const currentVideogamesToShow = toShow.slice(firstVideogameToShow,lastVideogameToShow);
 
 
@@ -103,27 +118,30 @@ export default function Home(){
     // --- RETURNING ---
     return (
         <div>
-            <div>
-                <Link to='/videogame'>Create new videogame</Link>
-                <button onClick={handleButtonReaload}>
-                    Reaload
-                </button>
-                <Link to='/genres'>
-                    <button>
-                        View genres available
+            <div className={styles.nav}>
+                <div>
+                    <SearchBar/>
+                </div>
+                <div className={styles.buttons}>
+                    <Link to='/videogame' ><button className={styles.addVideogame}><IoMdAdd/></button></Link>
+                    <button onClick={handleButtonReaload} className={styles.reloadButton}>
+                        <AiOutlineReload/>
                     </button>
-                </Link>
+                    <Link to='/genres'>
+                        <button className={styles.viewGenresButton}>
+                            View genres
+                        </button>
+                    </Link>
+                </div>
             </div>
             <div>
                 <Pages videogamesPerPage={videogamesPerPage} toShow={toShow} changePage={changePage}/>
             </div>
-            <div>
-                <SearchBar/>
-            </div>
-            <div>
+            
+            <div className={styles.filters}>
                 <div>
                     <label htmlFor="">Show</label>
-                    <select name="show" id="" onChange={handleFilter}>
+                    <select name="show" id="" onChange={handleFilter} className={styles.showSelector}>
                         <option value="All">All</option>
                         <option value="Created">Created</option>
                         <option value="Api">Api</option>
@@ -131,27 +149,56 @@ export default function Home(){
                     </select>
                    { 
                    filter === 'Genres'? (
-                   <select name="" id="" onChange={handleGenreFilter}>
+                   <select name="" id="" onChange={handleGenreFilter} className={styles.genreSelector}>
+                        <option value="-" key='-'>-</option>
                         {
                             genresNames.map(g=><option key={g} value={g}>{g}</option>)
                         } 
                     </select>): <div></div>
                     }
                 </div>
-                <label htmlFor="">Order</label>
-                <select name="" id="" onChange={handleOrder}>
-                    <option value="asc">Asc</option>
-                    <option value="des">Des</option>
-                </select>                
+                <select name="" id="alphSelector" onChange={handleOrder} className={styles.orderSelector}>
+                    <option value="-" key='--'>-</option>
+                    <option value="asc" key='asc'>Alph Asc</option>
+                    <option value="des" key='desc'>Alph Desc</option>
+                </select>         
+                <select name="" id="" onChange={handleOrder} className={styles.orderSelector}>
+                    <option value="-" key='---'>-</option>
+                    <option value="ascR" key='ascR'>Rating Asc</option>
+                    <option value="desR" key='descR'>Rating Desc</option>
+                </select>         
             </div>
-            {            
-            <div>
-                {   currentVideogamesToShow.map(v=>(
-                        <Card key={(v.id)} id = {v.id} name={v.name} image = {v.image} genres = {v.genres}/>
-                    ))
-                }
-            </div>
+
+            {
+                typeof(allvideogames)==='string'?
+                alert('Videogame not found, try again'):
+                <div className={styles.toAlign}>
+                    <div className={styles.cards}>        
+                        {   currentVideogamesToShow.map(v=>(
+                                <Card 
+                                key={(v.id)} 
+                                id = {v.id} 
+                                name={v.name} 
+                                image = {v.image} 
+                                genres = {v.genres} 
+                                rating={v.rating}
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
             }
+            <div>
+                <Pages videogamesPerPage={videogamesPerPage} toShow={toShow} changePage={changePage}/>
+            </div>
+            <div className={styles.random}>
+                <p>Are you tired to play always the same game? Try with our random game generator!</p>
+                <Link to='random'>
+                    <button className={styles.randomButton}>
+                        <FaRandom/>
+                    </button>
+                </Link>
+            </div>
         </div>
     )
 }

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {Link} from 'react-router-dom';
 import { createVideogame, getGenres } from '../actions';
-
+import style from '../styles/Create.module.css';
+import {AiOutlineHome} from 'react-icons/ai';
 
 // internal FUNCTIONS
     // --- HANDLE ERRORS ---
@@ -28,6 +29,7 @@ import { createVideogame, getGenres } from '../actions';
         }
     return errors;
     }
+
 // FUNCTION TO EXPORT - COMPONENT CREATE
 export default function Create(){
     // STATES AND CONSTANTS
@@ -48,6 +50,16 @@ export default function Create(){
     const genresNames = genres.map(g=>g.name);
     const today = new Date();
     // --- FUNCTIONS ----
+
+    function readyToSend(){
+        var count = 0;
+        for (let error in errors){
+            if(error.length!==0){count=count+1;}
+        }
+        if(count===0){return true;}
+        else{return false;}
+    }
+
     function handleChange(e){
         e.preventDefault();
         setForm({
@@ -63,10 +75,11 @@ export default function Create(){
 
     function handleSubmit(e){
         e.preventDefault();
-        if(!isNaN(form.rating)){
+        if(!isNaN(form.rating) && readyToSend()){
             dispatch(createVideogame(form));
+            alert(`${form.name} has been created!`);
         }else{
-            alert('Rating must be a number.')
+            alert('Please complete correctly the form.')
         }
     }
     function handleCheckGenre(e){
@@ -98,83 +111,103 @@ export default function Create(){
 
 
     return(
-        <div>
-            <div><h1>We'll create a new videogame in our database</h1></div>
-            <Link to='/home'><button>Home</button></Link>
-            <form action="" onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="">Name</label>
-                    <input 
-                    type="text"  
-                    name='name' 
-                    onChange={handleChange} 
-                    value = {form.name}
-                    />
-                    {errors.name && (<p>{errors.name}</p>)}
+        <div className={style.all}>
+            <div className= {style.alignHomeButton}>
+                <Link to='/home'><button className={style.homeButton}><AiOutlineHome/></button></Link>
+            </div>
+            <form action="" onSubmit={handleSubmit} className={style.form}>
+                <div className={style.nameAndURL}>
+                    <div className={style.alignInputName}>
+                        <input 
+                        type="text"  
+                        name='name' 
+                        onChange={handleChange} 
+                        value = {form.name}
+                        className={style.inputName}
+                        placeHolder='Name.'
+                        />
+                        {errors.name && (<p className={style.error}>{errors.name}</p>)}
+                    </div>
+                    <div className={style.alignInputURL}>
+                        <input 
+                        type="text"  
+                        name='image' 
+                        onChange={handleChange} 
+                        value = {form.image}
+                        className={style.InputURL}
+                        placeholder='URL image.'
+                        />
+                    </div>
+                </div>
+                <div className={style.releasedAndRating}>
+                    <div className={style.alignReleased}>
+                        <input 
+                        type="date" 
+                        name='released'
+                        min="1980-01-01" 
+                        max={`${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`}
+                        onChange={handleChange}
+                        value={form.date}
+                        className={style.inputReleased}
+                        placeholder='Released'
+                        />
+                        {errors.released && (<p className={style.error}>{errors.released}</p>)}    
+                    </div>
+                    <div className={style.alignInputRating}>
+                        <input 
+                        type="num" 
+                        name='rating' 
+                        onChange={handleChange}
+                        value = {form.rating}
+                        className={style.inputRating}
+                        placeholder='Rating: 0-5'
+                        />
+                        {errors.rating && (<p className={style.error}>{errors.rating}</p>)}
+                    </div>
                 </div>
                 <div>
-                    <label htmlFor="">URL image</label>
-                    <input 
-                    type="text"  
-                    name='image' 
-                    onChange={handleChange} 
-                    value = {form.image}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="">Released</label>
-                    <input 
-                    type="date" 
-                    name='released'
-                    min="1980-01-01" 
-                    max={`${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`}
-                    onChange={handleChange}
-                    value={form.date}
-                    />
-                    {errors.released && (<p>{errors.released}</p>)}    
-                </div>
-                <div>
-                    <label htmlFor="">Rating</label>
-                    <input 
-                    type="num" 
-                    name='rating' 
-                    onChange={handleChange}
-                    value = {form.rating}
-                    />
-                    {errors.rating && (<p>{errors.rating}</p>)}
-                </div>
-                <div>
-                    <label htmlFor="">Genres</label>
-                    <div>
+                    <label htmlFor="" className={style.genres}>Genres</label>
+                    <div className={style.genreSelector}>
                         {
                             genresNames.map(
                                 g=>(
-                                <label htmlFor="">
-                                <input 
-                                key={g} 
-                                value={g}
-                                type='checkbox'
-                                onChange={handleCheckGenre}
-                                />{g}
-                                </label>)
+                                <div className={style.alignGenres}>
+                                    <label htmlFor="">
+                                    <input 
+                                    key={g} 
+                                    value={g}
+                                    type='checkbox'
+                                    onChange={handleCheckGenre}
+                                    />{g}
+                                    </label>
+                                </div>)
                                 )
                         }
                     </div>
-                    {errors.genres && (<p>{errors.genres}</p>)} 
+                    {errors.genres && (<p className={style.error}>{errors.genres}</p>)} 
                 </div>
                 <div>
-                    <label htmlFor="">Platforms</label>
-                    <div>
-                        <label htmlFor=""><input key="PC" type='checkbox' value="PC" onChange={handleCheckPlatforms}/>PC</label>
-                        <label htmlFor=""><input key='PlayStation' type='checkbox' value="PlayStation" onChange={handleCheckPlatforms}/>PlayStation</label>
-                        <label htmlFor=""><input key='Xbox' type='checkbox' value="Xbox"onChange={handleCheckPlatforms}/>Xbox</label>
-                        <label htmlFor=""><input key='Apple' type='checkbox' value="Apple Macintosh"onChange={handleCheckPlatforms}/>Apple Macintosh</label>
-                        <label htmlFor=""><input key='Nintendo' type='checkbox' value="Nintendo"onChange={handleCheckPlatforms}/>Nintendo   </label>                 
+                    <label htmlFor="" className={style.platforms}>Platforms</label>
+                    <div className={style.platformsSelector}>
+                        <div className={style.alignPlatforms}>
+                            <label htmlFor=""><input key="PC" type='checkbox' value="PC" onChange={handleCheckPlatforms}/>PC</label>
+                        </div>
+                        <div className={style.alignPlatforms}>
+                            <label htmlFor=""><input key='PlayStation' type='checkbox' value="PlayStation" onChange={handleCheckPlatforms}/>PlayStation</label>
+                        </div>
+                        <div className={style.alignPlatforms}>
+                            <label htmlFor=""><input key='Xbox' type='checkbox' value="Xbox"onChange={handleCheckPlatforms}/>Xbox</label>
+                        </div>
+                        <div className={style.alignPlatforms}>
+                            <label htmlFor=""><input key='Apple' type='checkbox' value="Apple Macintosh"onChange={handleCheckPlatforms}/>Apple Macintosh</label>
+                        </div>
+                        <div className={style.alignPlatforms}>
+                            <label htmlFor=""><input key='Nintendo' type='checkbox' value="Nintendo"onChange={handleCheckPlatforms}/>Nintendo   </label>                 
+                        </div>
                     </div>
-                    {errors.platforms && (<p>{errors.platforms}</p>)}
+                    {errors.platforms && (<p className={style.error}>{errors.platforms}</p>)}
                 </div>
-                <div>
-                    <label htmlFor="">Description</label>
+                <div className={style.alignDescription}>
                     <textarea 
                     name="description" 
                     id="" 
@@ -182,11 +215,15 @@ export default function Create(){
                     rows="10" 
                     onChange={handleChange}
                     value={form.description}
+                    className={style.description}
+                    placeholder='Please enter a complete description.'
                     >
                     </textarea>
-                    {errors.description && (<p>{errors.description}</p>)}    
                 </div>
-                <button type='submit' onSubmit={handleSubmit}>Create</button>
+                {errors.description && (<p className={style.error}>{errors.description}</p>)}    
+                <div className={style.alignCreateButton}>
+                    <button type='submit' onSubmit={handleSubmit} className={style.createButton}>Create</button>
+                </div>
             </form>
         </div>
     )

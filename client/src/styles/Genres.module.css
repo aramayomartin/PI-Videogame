@@ -1,0 +1,39 @@
+.all{
+    color: #EE9B00;
+}
+
+.alignHomeButton{
+    display: flex;
+    justify-content:flex-start;
+    margin-top:1rem;
+    margin-left:10rem;
+}
+
+
+.homeButton{
+    height:2.5rem;
+    width:2.5rem;
+    border-radius: 100px;
+
+    color:white;
+    background-color: #EE9B00;
+    font-size:1rem;
+    font-weight:900;
+    margin-top:2rem;
+}
+.homeButton:hover{
+    color:#023047;
+    border-color:#023047;
+    background-color: #EE9B00;
+}
+
+.list{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-left:15rem;
+}
+
+.item{
+    display:flex;
+    justify-content:flex-start;
+}

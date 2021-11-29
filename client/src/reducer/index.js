@@ -4,7 +4,8 @@ const initialState = {
     searchByName: [],
     detail: [],
     genres: [],
-    detail:{}
+    detail:{},
+    random:{description:''}
 }
 
 
@@ -42,6 +43,12 @@ function reducer(state = initialState,action){
             return {
                 ...state,
                 detail : Array.isArray(action.payload)?action.payload[0]:action.payload
+            }
+
+        case 'GET_RANDOM':
+            return {
+                ...state,
+                random : Array.isArray(action.payload)?action.payload[0]:action.payload
             }
         default:
             return state;

@@ -1,0 +1,179 @@
+.all{
+    color: #EE9B00;
+    font-weight: 800;
+}
+.alignHomeButton{
+    display: flex;
+    justify-content:flex-start;
+    margin-top:1rem;
+    margin-left:10rem;
+}
+.homeButton{
+    height:2.5rem;
+    width:2.5rem;
+    border-radius: 100px;
+
+    color:white;
+    background-color: #EE9B00;
+    font-size:1rem;
+    font-weight:900;
+}
+.homeButton:hover{
+    color:#023047;
+    border-color:#023047;
+    background-color: #EE9B00;
+}
+
+.form{
+    display:flex;
+    flex-direction:column;
+}
+
+.genreSelector{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items:flex-start;
+}
+
+.nameAndURL{
+    display:flex;
+    flex-direction: row;
+}
+
+.alignInputName{
+    display: flex;
+    justify-content:flex-start;
+    margin-top:3rem;
+    margin-left:15rem; 
+}
+.inputName{
+    height:2rem;
+    border-radius: 10px;
+    background-color:white;
+}
+
+.alignInputURL{
+    display: flex;
+    justify-content:flex-start;
+    margin-top:3rem;
+    margin-left:10rem; 
+}
+.InputURL{
+    height:2rem;
+    border-radius: 10px;
+    background-color:white;
+}
+
+
+
+.releasedAndRating{
+    display:flex;
+    flex-direction: row;
+}
+.alignReleased{
+    display: flex;
+    justify-content:flex-start;
+    margin-top:3rem;
+    margin-left:15rem; 
+}
+.inputReleased{
+    height:2rem;
+    border-radius: 10px;
+    background-color:white;
+}
+
+.alignInputRating{
+    display: flex;
+    justify-content:flex-start;
+    margin-top:3rem;
+    margin-left:13rem; 
+}
+.inputRating{
+    height:2rem;
+    border-radius: 10px;
+    background-color:white;
+}
+
+
+.genres{
+    display:flex;
+    justify-content:flex-start;
+    margin-top:3rem;
+    margin-left:15rem;
+    margin-bottom:2rem;
+}
+
+.alignGenres{
+    display:flex;
+    justify-content:flex-start;
+}
+
+.genreSelector{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-left:15rem;
+}
+
+.platforms{
+    display:flex;
+    justify-content:flex-start;
+    margin-top:3rem;
+    margin-left:15rem;
+    margin-bottom:2rem;
+}
+
+.alignPlatforms{
+    display:flex;
+    justify-content:flex-start;
+}
+
+.platformsSelector{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-left:15rem;
+}
+
+.alignDescription{
+    margin-top:2rem;
+    display:flex;
+    justify-content:flex-start;
+    margin-left:15rem;
+}
+
+.description{
+    border-radius:10px;
+    height: 10rem;
+    width:53rem;
+}
+
+.alignCreateButton{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:2rem;
+    margin-right: 16rem;
+    margin-bottom:3rem;
+}
+
+
+.createButton{
+    height:2.5rem;
+    width:5rem;
+    border-radius: 10px;
+
+    color:white;
+    background-color: #EE9B00;
+    font-size:1rem;
+    font-weight:900;
+}
+.createButton:hover{
+    color:#023047;
+    border-color:#023047;
+    background-color: #EE9B00;
+}
+
+.error{
+    color:red;
+    font-size: medium;
+    font-weight:400;
+    margin-left:2px;
+}

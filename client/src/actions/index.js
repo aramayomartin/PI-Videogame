@@ -38,6 +38,8 @@ export function cleanSearchByName(){
     }
 }
 
+
+
 export function cleanDetail(){
     return function(dispatch){
         return dispatch({
@@ -63,6 +65,20 @@ export function getDetail(id){
             var v = await axios.get(`http://localhost:3001/videogame/${id}`);
             return dispatch({
                 type: 'GET_DETAIL',
+                payload: v.data,
+            })
+        }catch(e) {
+            console.log(e);
+        }
+    }
+}
+
+export function getRandom(id){
+    return async function(dispatch){
+        try{
+            var v = await axios.get(`http://localhost:3001/videogame/${id}`);
+            return dispatch({
+                type: 'GET_RANDOM',
                 payload: v.data,
             })
         }catch(e) {

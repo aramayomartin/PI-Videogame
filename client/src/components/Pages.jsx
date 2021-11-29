@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from '../styles/Pages.module.css';
 
 export default function Pages({videogamesPerPage,toShow,changePage}){
     const pages = [];
@@ -8,12 +9,10 @@ export default function Pages({videogamesPerPage,toShow,changePage}){
     
     return (
         <div>
-            <ul>
+            <ul className = {styles.pages}>
                 {
                     pages.map(n=> (
-                    <ul>
-                        <li key={String(n)}><a onClick={()=>changePage(n)}>{n}</a></li>
-                    </ul>
+                        <li key={String(n)} className={styles.items}><a onClick={()=>changePage(n)}>{n}</a></li>
                     ))
                 }
             </ul>

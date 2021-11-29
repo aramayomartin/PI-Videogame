@@ -1,0 +1,150 @@
+html{
+    background-image: url(https://wallpapercave.com/wp/wp2578580.jpg);
+}
+
+.nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+
+.buttons{
+    margin-top: 1rem;
+}
+
+.addVideogame{
+    height:2.5rem;
+    width:2.5rem;
+    border-radius: 100px;
+
+    color:white;
+    background-color: #EE9B00;
+    font-size:1rem;
+    font-weight:900;
+}
+
+.addVideogame:hover{
+    color:#023047;
+    border-color:#023047;
+    background-color: #EE9B00;
+}
+
+.reloadButton{
+    height:2.5rem;
+    width:2.5rem;
+    border-radius: 100px;
+
+    color:white;
+    background-color: #EE9B00;
+    font-size:1rem;
+    font-weight:900;
+}
+
+.reloadButton:hover{
+    color:#023047;
+    border-color:#023047;
+    background-color: #EE9B00;
+}
+
+.viewGenresButton{
+    height:2.5rem;
+    border-radius: 10px;
+
+    color:white;
+    background-color: #EE9B00;
+    font-size:1rem;
+    font-weight:900;
+}
+
+.viewGenresButton:hover{
+    color:#023047;
+    border-color:#023047;
+    background-color: #EE9B00;
+}
+
+.filters{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    color:#EE9B00;
+    font-weight: 900;
+
+}
+
+.showSelector{
+    height:2.5rem;
+    border-radius: 10px;
+
+    color:white;
+    background-color: #EE9B00;
+    font-size:1rem;
+    font-weight:900;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.genreSelector{
+    height:2.5rem;
+    border-radius: 10px;
+
+    color:white;
+    background-color: #EE9B00;
+    font-size:1rem;
+    font-weight:900;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.orderSelector{
+    height:2.5rem;
+    border-radius: 10px;
+
+    color:white;
+    background-color: #EE9B00;
+    font-size:1rem;
+    font-weight:900;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.toAlign{
+    display:flex;
+    justify-content:center;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.random{
+    color:#EE9B00;
+
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    font-weight:700;
+    font-size: large;
+
+    margin-bottom: 2rem;
+}
+
+.randomButton{
+    height:2.5rem;
+    width:2.5rem;
+    border-radius: 100px;
+
+    color:white;
+    background-color: #EE9B00;
+    font-size:1rem;
+    font-weight:900;
+}
+
+.randomButton:hover{
+    color:#023047;
+    border-color:#023047;
+    background-color: #EE9B00;
+}

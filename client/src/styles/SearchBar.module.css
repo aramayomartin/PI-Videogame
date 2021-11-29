@@ -1,0 +1,23 @@
+
+.input{
+    height:2rem;
+    border-radius: 10px;
+}
+
+.searchButton{
+    height:2.5rem;
+    width:2.5rem;
+    border-radius: 100px;
+
+    color:white;
+    background-color: #EE9B00;
+    font-size:1rem;
+    font-weight:900;
+}
+
+.searchButton:hover{
+    color:#023047;
+    border-color:#023047;
+    background-color: #EE9B00;
+}
+

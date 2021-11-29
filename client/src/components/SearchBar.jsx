@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch} from 'react-redux';
 import { getAllVideogames, getVideogameByName } from '../actions';
+import styles from '../styles/SearchBar.module.css';
+import {AiOutlineSearch} from 'react-icons/ai';
 
 export default function SearchBar(){
     // --- HOOKS---
@@ -21,9 +23,9 @@ export default function SearchBar(){
     // --- RETURNING ---
     return(
         <div>
-            <form action="" onSubmit={handleSubmit}>
-                <input id = 'search-input' placeholder="Search Videogame" onChange={handleChange}/>
-                <button type='Submit'>Search</button>
+            <form action="" onSubmit={handleSubmit} className={styles.searchForm}>
+                <input id = 'search-input' placeholder="Search Videogame" onChange={handleChange} className={styles.input}/>
+                <button type='Submit' className={styles.searchButton}><AiOutlineSearch/></button>
             </form>
         </div>
     )

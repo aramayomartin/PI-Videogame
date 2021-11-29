@@ -1,28 +1,30 @@
-import React, { useEffect } from 'react';
-import { Link , useParams} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-import { getDetail } from '../actions';
-import style from '../styles/Detail.module.css';
-import {AiOutlineHome} from 'react-icons/ai';
+import { getRandom } from '../actions';
+import style from '../styles/RandomGenerator.module.css';
+import {AiOutlineHome,AiOutlineReload} from 'react-icons/ai';
 
-export default function Detail(){
-    // --- HOOKS ---
-    const {id} = useParams();
+export default function RandomGenerator(){
+    const [id,setId] = useState(String(Math.floor(Math.random()*10000)));
     const dispatch = useDispatch();
     useEffect(()=>{
-        dispatch(getDetail(id))
+        dispatch(getRandom(id))
     },[dispatch,id]);
-    const videogame = useSelector(state=>state.detail);
+    const videogame = useSelector(state=>state.random);
 
-    function insertDescription(){
-        document.getElementById('description').innerHTML=videogame.description;
-    }
-
+function reloadRandom(e){
+    e.preventDefault();
+    setId(String(Math.floor(Math.random()*10000)));
+}
 
     return(
         <div className={style.all}>
                 <div className= {style.alignHomeButton}>
                     <Link to = '/home'><button className={style.homeButton}><AiOutlineHome/></button></Link>
+                    <button onClick={reloadRandom} className={style.reloadButton}>
+                        <AiOutlineReload/>
+                    </button>                
                 </div>
             {
                 <div>
@@ -51,16 +53,12 @@ export default function Detail(){
                     </div>
                     <div id='description' className={style.description}>
                         {
-                           id.includes('-')?
-                           videogame.description && <p>{videogame.description}</p>:
-                           videogame.description && insertDescription() 
+                           videogame.description  
                         }                    
                     </div>
                     <h2 className={style.alignGenre}>Genres</h2>
                     <ul className={style.unorderList}>
                         {
-                           id.includes('-')?
-                            videogame.genres && videogame.genres.map(g=><li className={style.item} key={g.name}>{g.name}</li>):
                             videogame.genres && videogame.genres.map(g=><li className={style.item} key={g}>{g}</li>)
                         }
                     </ul>

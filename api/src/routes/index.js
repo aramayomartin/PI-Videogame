@@ -72,10 +72,14 @@ router.get('/videogames',async(req,res)=>{
             }
             // returning 
             const toReturn = allVideogamesInDB.concat(showVideogamesF50P);
-            res.status(200).send(toReturn);
+            if(toReturn.length===0){
+                res.status(400).send('Videogame not found!');
+            }else{
+                res.status(200).send(toReturn);
+            }
         }
     }catch{
-        res.status(400).send('Something went wrong! :(');
+        res.status(404).send('Something went wrong! :(');
     }
 })
 
