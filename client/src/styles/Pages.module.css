@@ -15,5 +15,29 @@
     width: 600;
     cursor: pointer;
     margin-left: 2rem;
+
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
     
+}
+
+.actualPage{
+    list-style:none;
+    font-size: 1.5rem;
+    color:#EE9B00;
+    width: 600;
+    cursor: pointer;
+    margin-left: 2rem;
+    background-color: white;
+    border: #EE9B00;
+    width: 2.5rem;
+    height:2.5rem;
+    border-radius: 1000000px;
+    
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
 }

@@ -4,7 +4,7 @@ import { getAllVideogames, getVideogameByName } from '../actions';
 import styles from '../styles/SearchBar.module.css';
 import {AiOutlineSearch} from 'react-icons/ai';
 
-export default function SearchBar(){
+export default function SearchBar({setPage}){
     // --- HOOKS---
     const dispatch = useDispatch();
     // --- LOCAL STATE ---
@@ -19,6 +19,7 @@ export default function SearchBar(){
         search.length ? dispatch(getVideogameByName(search)):
         getAllVideogames();
         document.getElementById('search-input').value='';
+        setPage(1);
     }
     // --- RETURNING ---
     return(

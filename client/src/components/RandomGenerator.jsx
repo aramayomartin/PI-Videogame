@@ -17,6 +17,12 @@ function reloadRandom(e){
     e.preventDefault();
     setId(String(Math.floor(Math.random()*10000)));
 }
+function insertDescription(){
+    setTimeout(()=>{
+     document.getElementById('description').innerHTML=videogame.description;
+    },10);
+    }
+
 
     return(
         <div className={style.all}>
@@ -53,7 +59,9 @@ function reloadRandom(e){
                     </div>
                     <div id='description' className={style.description}>
                         {
-                           videogame.description  
+                           id.includes('-')?
+                           videogame.description && <p>{videogame.description}</p>:
+                           videogame.description && insertDescription() 
                         }                    
                     </div>
                     <h2 className={style.alignGenre}>Genres</h2>

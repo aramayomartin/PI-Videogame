@@ -15,9 +15,10 @@ export default function Detail(){
     const videogame = useSelector(state=>state.detail);
 
     function insertDescription(){
-        document.getElementById('description').innerHTML=videogame.description;
+    setTimeout(()=>{
+     document.getElementById('description').innerHTML=videogame.description;
+    },10);
     }
-
 
     return(
         <div className={style.all}>
@@ -25,7 +26,9 @@ export default function Detail(){
                     <Link to = '/home'><button className={style.homeButton}><AiOutlineHome/></button></Link>
                 </div>
             {
+                Object.keys(videogame).length?
                 <div>
+                    
                     <h1>
                         {
                         videogame.name && videogame.name
@@ -72,7 +75,10 @@ export default function Detail(){
                         }
                     </ul>
                 </div>
-            }
+                :
+                <h1>Videogame not found!</h1>
+                
+        }
         </div>
     )
 }

@@ -19,6 +19,7 @@ export default function Home(){
    const allVideogames = useSelector((state) => state.videogames);
    const foundByName = useSelector(state=>state.searchByName);
    const genres = useSelector(state=>state.genres);
+   const searchByNameFlag = useSelector(state=>state.searchByNameFlag);
    useEffect(()=>{dispatch(getAllVideogames())},[dispatch]);
    useEffect(()=>{dispatch(getGenres())},[dispatch]);
    useEffect(()=>{dispatch(cleanDetail())},[dispatch]);
@@ -120,7 +121,7 @@ export default function Home(){
         <div>
             <div className={styles.nav}>
                 <div>
-                    <SearchBar/>
+                    <SearchBar setPage = {setPage}/>
                 </div>
                 <div className={styles.buttons}>
                     <Link to='/videogame' ><button className={styles.addVideogame}><IoMdAdd/></button></Link>
@@ -135,7 +136,7 @@ export default function Home(){
                 </div>
             </div>
             <div>
-                <Pages videogamesPerPage={videogamesPerPage} toShow={toShow} changePage={changePage}/>
+                <Pages actualPage= {page} videogamesPerPage={videogamesPerPage} toShow={toShow} changePage={changePage}/>
             </div>
             
             <div className={styles.filters}>
@@ -168,10 +169,13 @@ export default function Home(){
                     <option value="desR" key='descR'>Rating Desc</option>
                 </select>         
             </div>
-
+            
             {
-                typeof(allvideogames)==='string'?
-                alert('Videogame not found, try again'):
+                allVideogames.length?(
+                searchByNameFlag && !foundByName.length?
+                <h1>Videogame not founded!</h1>
+                :
+                toShow.length ?(
                 <div className={styles.toAlign}>
                     <div className={styles.cards}>        
                         {   currentVideogamesToShow.map(v=>(
@@ -186,10 +190,14 @@ export default function Home(){
                             ))
                         }
                     </div>
-                </div>
+                </div>):
+                <h1 className={styles.notFounded}>Empty.</h1>
+                )
+                :
+                <img src="https://i.pinimg.com/originals/a9/02/16/a902167cae8538769ad56ec7514ce73c.gif" alt="" />
             }
             <div>
-                <Pages videogamesPerPage={videogamesPerPage} toShow={toShow} changePage={changePage}/>
+                <Pages actualPage = {page} videogamesPerPage={videogamesPerPage} toShow={toShow} changePage={changePage}/>
             </div>
             <div className={styles.random}>
                 <p>Are you tired to play always the same game? Try with our random game generator!</p>

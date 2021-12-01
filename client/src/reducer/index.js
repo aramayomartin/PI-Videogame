@@ -5,7 +5,7 @@ const initialState = {
     detail: [],
     genres: [],
     detail:{},
-    random:{description:''}
+    random:{description:''},
 }
 
 
@@ -17,10 +17,11 @@ function reducer(state = initialState,action){
                 ...state,
                 videogames:action.payload
             };
+
         case 'GET_VIDEOGAME_BY_NAME':
             return{
                 ...state,
-                searchByName:action.payload
+                searchByName:action.payload,
             }
         case 'CLEAN_SEARCH_BY_NAME':
             return {
