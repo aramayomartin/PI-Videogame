@@ -73,13 +73,13 @@ router.get('/videogames',async(req,res)=>{
             // returning 
             const toReturn = allVideogamesInDB.concat(showVideogamesF50P);
             if(toReturn.length===0){
-                res.status(400).send('Videogame not found!');
+                res.status(404).send('Videogame not found!');
             }else{
                 res.status(200).send(toReturn);
             }
         }
     }catch{
-        res.status(404).send('Something went wrong! :(');
+        res.status(400).send('Something went wrong! :(');
     }
 })
 
@@ -112,7 +112,7 @@ router.get('/videogame/:id',async(req,res)=>{
             return res.status(200).send(r);
         }
     }catch{
-        res.status(400).send('Something went wrong! :(');
+        res.status(404).send('Something went wrong! :(');
     }
 })
 
@@ -138,7 +138,7 @@ router.get('/genres', async (_, res) => {
       const allGenres = await Genres.findAll();
       res.status(200).send(allGenres);
     } catch {
-      res.status(400).send('Something went wrong! :(');
+      res.status(404).send('Something went wrong! :(');
     }
   });
 
@@ -170,7 +170,7 @@ router.post('/videogame',async(req,res)=>{
         newVideogame.addGenres(genreDB);
         res.status(200).send('Succesful');
     }catch{
-        res.status(400).send('Something went wrong! :(');
+        res.status(404).send('Something went wrong! :(');
     }
 })
 

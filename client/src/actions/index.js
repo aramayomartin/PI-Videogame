@@ -30,23 +30,23 @@ export function getVideogameByName(name){
     }
 }
 
-export function cleanSearchByName(){
+export function cleanAll(){
     return function(dispatch){
         return dispatch({
-            type:'CLEAN_SEARCH_BY_NAME',
+            type:'CLEAN_ALL',
         })
     }
 }
 
 
 
-export function cleanDetail(){
+/* export function cleanDetail(){
     return function(dispatch){
         return dispatch({
             type:'CLEAN_DETAIL',
         })
     }
-}
+} */
 
 
 

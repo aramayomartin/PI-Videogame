@@ -77,7 +77,7 @@ export default function Create(){
         e.preventDefault();
         if(!isNaN(form.rating) && readyToSend()){
             dispatch(createVideogame(form));
-            alert(`${form.name} has been created!`);
+            form.name.length?alert(`${form.name} has been created!`):alert('Form is empty!');
         }else{
             alert('Please complete correctly the form.')
         }

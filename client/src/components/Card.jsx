@@ -5,11 +5,11 @@ export default function Card({id,image,name,genres,rating}){
 
     return(
         
-        <div className={style.card}>
-            <Link to={`/videogame/${id}`}><h3 className={style.title}>{name}</h3 ></Link>
+        <Link to={`/videogame/${id}`} className={style.title}><div className={style.card}>
+            <h3 className={style.title}>{name}</h3 >
             <img src={image} alt="" className={style.image}/>
             <p>{`Rating: ${rating}.`}</p>
             <p>Genres: {Number.isInteger(id)? genres.join('-'):genres.map(g=>g.name).join(',')}.</p>
-        </div>
+        </div></Link>
     )
 }

@@ -5,14 +5,16 @@ import styles from '../styles/Home.module.css';
 import {IoMdAdd} from 'react-icons/io';
 import {AiOutlineReload} from 'react-icons/ai';
 import {FaRandom} from 'react-icons/fa';
-//hooks ftom
+//hooks import
 import { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // Actions
-import {cleanDetail, cleanSearchByName, getAllVideogames, getGenres} from '../actions';
+import {cleanAll, getAllVideogames, getGenres} from '../actions';
+// Components
 import Card from './Card';
 import Pages from './Pages';
 import SearchBar from './SearchBar';
+// principal component
 export default function Home(){
    // --- HOOKS ---
    const dispatch = useDispatch();
@@ -22,8 +24,6 @@ export default function Home(){
    const searchByNameFlag = useSelector(state=>state.searchByNameFlag);
    useEffect(()=>{dispatch(getAllVideogames())},[dispatch]);
    useEffect(()=>{dispatch(getGenres())},[dispatch]);
-   useEffect(()=>{dispatch(cleanDetail())},[dispatch]);
-
     // --- Constants and states ---
     const genresNames = genres.map(g=>g.name);
     const [page,setPage] = useState(1);
@@ -37,14 +37,27 @@ export default function Home(){
     // --- FUNCTIONS ---
     function handleButtonReaload(e) {
         e.preventDefault();
-        dispatch(cleanSearchByName());
+        dispatch(cleanAll());
         dispatch(getAllVideogames());
-        dispatch(cleanDetail());
+        //dispatch(cleanDetail());
         setPage(1);
         setGenreFilter('');
         setFilter('');
         setOrder('');
+        document.getElementById('selectorShow').selectedIndex  =0;
+        document.getElementById('selectorAlph').selectedIndex  =0;
+        document.getElementById('selectorRating').selectedIndex  =0;
     };
+    function handleReloadFilter(e){
+        e.preventDefault();
+        setPage(1);
+        setGenreFilter('');
+        setFilter('');
+        setOrder('');
+        document.getElementById('selectorShow').selectedIndex  =0;
+        document.getElementById('selectorAlph').selectedIndex  =0;
+        document.getElementById('selectorRating').selectedIndex  =0;
+    }
     function changePage(page) {
         setPage(page);
     }
@@ -74,48 +87,45 @@ export default function Home(){
     // What will we show?
     // if exists some search by name, then we will show those games, but if it doesn't exist
     // we have to show all videogames and the filters must be applicated over the games to show.
-    var vg1 = [];   // array post search videogame by name or not
-    foundByName.length ?  vg1 = foundByName :  vg1 = allVideogames;
+    var searchVideogame_allVideogame = [];   // array post search videogame by name or not
+    foundByName.length ?  searchVideogame_allVideogame = foundByName :  searchVideogame_allVideogame = allVideogames;
     // then we will aplly the filters one to one over arrays
-    var vg2 = []; // array post first filter - show by genre or created in our database
+    var postFilter_genreOrCreated = []; // array post first filter - show by genre or created in our database
     switch(filter){
         case 'Genres':
-            vg2 = vg1.filter(v=>v.genres.includes(genreFilter) || v.genres.map(e=>e.name).includes(genreFilter));
+            postFilter_genreOrCreated = searchVideogame_allVideogame.filter(v=>v.genres.includes(genreFilter) || v.genres.map(e=>e.name).includes(genreFilter));
             break;
         case 'Created':
-            vg2 = vg1.filter(v=>v.id.length>7);
+            postFilter_genreOrCreated = searchVideogame_allVideogame.filter(v=>v.id.length>7);
             break;
         case 'Api':
-            vg2 = vg1.filter(v=>Number.isInteger(v.id));
+            postFilter_genreOrCreated = searchVideogame_allVideogame.filter(v=>Number.isInteger(v.id));
             break;
         case 'All':
-            vg2=vg1;
+            postFilter_genreOrCreated=searchVideogame_allVideogame;
             break;
         default:
-            vg2 = vg1;
+            postFilter_genreOrCreated = searchVideogame_allVideogame;
             break;
-    }
+    };
     switch(order){
         case 'asc':
-            vg2.sort(orderFunction); 
+            postFilter_genreOrCreated.sort(orderFunction).reverse(); 
             break;      
         case 'des':
-            vg2.sort(orderFunction).reverse();
+            postFilter_genreOrCreated.sort(orderFunction);
             break;
         case 'ascR':
-            vg2.sort(orderRatingFunction);
+            postFilter_genreOrCreated.sort(orderRatingFunction).reverse();
             break;
         case 'desR':
-            vg2.sort(orderRatingFunction).reverse();
+            postFilter_genreOrCreated.sort(orderRatingFunction);
             break;
         default:
             break;
     }
-    var toShow = vg2;     
+    var toShow = postFilter_genreOrCreated;     
     const currentVideogamesToShow = toShow.slice(firstVideogameToShow,lastVideogameToShow);
-
-
-    
     // --- RETURNING ---
     return (
         <div>
@@ -142,7 +152,7 @@ export default function Home(){
             <div className={styles.filters}>
                 <div>
                     <label htmlFor="">Show</label>
-                    <select name="show" id="" onChange={handleFilter} className={styles.showSelector}>
+                    <select name="show" id="selectorShow" onChange={handleFilter} className={styles.showSelector}>
                         <option value="All">All</option>
                         <option value="Created">Created</option>
                         <option value="Api">Api</option>
@@ -150,7 +160,7 @@ export default function Home(){
                     </select>
                    { 
                    filter === 'Genres'? (
-                   <select name="" id="" onChange={handleGenreFilter} className={styles.genreSelector}>
+                   <select name="" id="selectorGenre" onChange={handleGenreFilter} className={styles.genreSelector}>
                         <option value="-" key='-'>-</option>
                         {
                             genresNames.map(g=><option key={g} value={g}>{g}</option>)
@@ -158,16 +168,17 @@ export default function Home(){
                     </select>): <div></div>
                     }
                 </div>
-                <select name="" id="alphSelector" onChange={handleOrder} className={styles.orderSelector}>
+                <select name="" id="selectorAlph" onChange={handleOrder} className={styles.orderSelector}>
                     <option value="-" key='--'>-</option>
                     <option value="asc" key='asc'>Alph Asc</option>
                     <option value="des" key='desc'>Alph Desc</option>
                 </select>         
-                <select name="" id="" onChange={handleOrder} className={styles.orderSelector}>
+                <select name="" id="selectorRating" onChange={handleOrder} className={styles.orderSelector}>
                     <option value="-" key='---'>-</option>
                     <option value="ascR" key='ascR'>Rating Asc</option>
                     <option value="desR" key='descR'>Rating Desc</option>
-                </select>         
+                </select>
+                <button className={styles.viewGenresButton} onClick={handleReloadFilter}>Reload filters</button>         
             </div>
             
             {

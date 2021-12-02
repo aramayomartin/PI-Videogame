@@ -23,16 +23,18 @@ function reducer(state = initialState,action){
                 ...state,
                 searchByName:action.payload,
             }
-        case 'CLEAN_SEARCH_BY_NAME':
+        case 'CLEAN_ALL':
             return {
                 ...state,
-                searchByName:[]
+                searchByName:[],
+                videogames:[],
+                detail:{}
             }
-        case 'CLEAN_DETAIL':
+/*         case 'CLEAN_DETAIL':
             return {
                 ...state,
                 detail:{}
-            }
+            } */
         case 'GET_GENRES':
             return{
                 ...state,
