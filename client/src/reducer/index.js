@@ -2,7 +2,7 @@
 const initialState = {
     videogames:[],
     searchByName: [],
-    detail: [],
+//    detail: [],
     genres: [],
     detail:{},
     random:{description:''},
@@ -30,11 +30,6 @@ function reducer(state = initialState,action){
                 videogames:[],
                 detail:{}
             }
-/*         case 'CLEAN_DETAIL':
-            return {
-                ...state,
-                detail:{}
-            } */
         case 'GET_GENRES':
             return{
                 ...state,
@@ -47,7 +42,6 @@ function reducer(state = initialState,action){
                 ...state,
                 detail : Array.isArray(action.payload)?action.payload[0]:action.payload
             }
-
         case 'GET_RANDOM':
             return {
                 ...state,

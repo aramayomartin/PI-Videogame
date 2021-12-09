@@ -9,9 +9,7 @@ export default function Detail(){
     // --- HOOKS ---
     const {id} = useParams();
     const dispatch = useDispatch();
-    useEffect(()=>{
-        dispatch(getDetail(id))
-    },[dispatch,id]);
+    useEffect(()=>{dispatch(getDetail(id))},[dispatch,id]);
     const videogame = useSelector(state=>state.detail);
 
     function insertDescription(){

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import styles from '../styles/Home.module.css';
 // icons
 import {IoMdAdd} from 'react-icons/io';
-import {AiOutlineReload} from 'react-icons/ai';
+import {AiOutlineReload,AiFillLinkedin,AiFillGithub} from 'react-icons/ai';
 import {FaRandom} from 'react-icons/fa';
 //hooks import
 import { useEffect,useState } from 'react';
@@ -151,7 +151,7 @@ export default function Home(){
             
             <div className={styles.filters}>
                 <div>
-                    <label htmlFor="">Show</label>
+                    <label htmlFor="">Filter by </label>
                     <select name="show" id="selectorShow" onChange={handleFilter} className={styles.showSelector}>
                         <option value="All">All</option>
                         <option value="Created">Created</option>
@@ -168,17 +168,20 @@ export default function Home(){
                     </select>): <div></div>
                     }
                 </div>
-                <select name="" id="selectorAlph" onChange={handleOrder} className={styles.orderSelector}>
-                    <option value="-" key='--'>-</option>
-                    <option value="asc" key='asc'>Alph Asc</option>
-                    <option value="des" key='desc'>Alph Desc</option>
-                </select>         
-                <select name="" id="selectorRating" onChange={handleOrder} className={styles.orderSelector}>
-                    <option value="-" key='---'>-</option>
-                    <option value="ascR" key='ascR'>Rating Asc</option>
-                    <option value="desR" key='descR'>Rating Desc</option>
-                </select>
                 <button className={styles.viewGenresButton} onClick={handleReloadFilter}>Reload filters</button>         
+                <div>
+                    <label htmlFor="" margin-left='10px'>Order by </label>
+                    <select name="" id="selectorAlph" onChange={handleOrder} className={styles.orderSelector}>
+                        <option value="-" key='--'>-</option>
+                        <option value="asc" key='asc'>Alph Asc</option>
+                        <option value="des" key='desc'>Alph Desc</option>
+                    </select>         
+                    <select name="" id="selectorRating" onChange={handleOrder} className={styles.orderSelector}>
+                        <option value="-" key='---'>-</option>
+                        <option value="ascR" key='ascR'>Rating Asc</option>
+                        <option value="desR" key='descR'>Rating Desc</option>
+                    </select>
+                </div>
             </div>
             
             {
@@ -218,6 +221,13 @@ export default function Home(){
                     </button>
                 </Link>
             </div>
+            <div className={styles.contactBox}>
+                <ul className={styles.contact}>
+                <a href='https://www.linkedin.com/in/raul-martin-aramayo-marca/'><li className={styles.itemContact}><AiFillLinkedin/></li></a>
+                <a href="https://github.com/aramayomartin/"><li className={styles.itemContact}><AiFillGithub/></li></a>        
+                </ul>
+            </div>
+
         </div>
     )
 }

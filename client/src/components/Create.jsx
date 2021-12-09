@@ -43,7 +43,6 @@ export default function Create(){
         image:''
     });
     const [errors,setErrors] = useState({});
-
     const genres = useSelector(state=>state.genres);
     const dispatch = useDispatch();
     useEffect(()=>{dispatch(getGenres())},[dispatch]);
@@ -75,11 +74,17 @@ export default function Create(){
 
     function handleSubmit(e){
         e.preventDefault();
-        if(!isNaN(form.rating) && readyToSend()){
+        if(!isNaN(form.rating) && form.rating>=0 && readyToSend()){
             dispatch(createVideogame(form));
+            document.getElementById('formCreate').reset();
+            document.getElementById('nameInput').value='';
+            document.getElementById('imageInput').value='';
+            document.getElementById('descriptionInput').value='';
+            document.getElementById('ratingInput').value='';
+
             form.name.length?alert(`${form.name} has been created!`):alert('Form is empty!');
         }else{
-            alert('Please complete correctly the form.')
+            alert('Please complete the form correctly.')
         }
     }
     function handleCheckGenre(e){
@@ -115,7 +120,7 @@ export default function Create(){
             <div className= {style.alignHomeButton}>
                 <Link to='/home'><button className={style.homeButton}><AiOutlineHome/></button></Link>
             </div>
-            <form action="" onSubmit={handleSubmit} className={style.form}>
+            <form action="" onSubmit={handleSubmit} className={style.form} id='formCreate'>
                 <div className={style.nameAndURL}>
                     <div className={style.alignInputName}>
                         <input 
@@ -124,7 +129,8 @@ export default function Create(){
                         onChange={handleChange} 
                         value = {form.name}
                         className={style.inputName}
-                        placeHolder='Name.'
+                        placeholder='Name.'
+                        id= 'nameInput'
                         />
                         {errors.name && (<p className={style.error}>{errors.name}</p>)}
                     </div>
@@ -136,6 +142,7 @@ export default function Create(){
                         value = {form.image}
                         className={style.InputURL}
                         placeholder='URL image.'
+                        id='imageInput'
                         />
                     </div>
                 </div>
@@ -161,6 +168,7 @@ export default function Create(){
                         value = {form.rating}
                         className={style.inputRating}
                         placeholder='Rating: 0-5'
+                        id='ratingInput'
                         />
                         {errors.rating && (<p className={style.error}>{errors.rating}</p>)}
                     </div>
@@ -217,6 +225,7 @@ export default function Create(){
                     value={form.description}
                     className={style.description}
                     placeholder='Please enter a complete description.'
+                    id='descriptionInput'
                     >
                     </textarea>
                 </div>

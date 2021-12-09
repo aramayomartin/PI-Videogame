@@ -35,10 +35,5 @@ module.exports = (sequelize) => {
       allowNull:false,
       defaultValue: 'https://www.teahub.io/photos/full/127-1276342_cool-video-game-wallpapers-fondo-de-pantalla-gamer.jpg'
     },
-    createdInDb:{
-      type: DataTypes.BOOLEAN,
-      allowNull:false,
-      defaultValue:true
-    },
   });
 };

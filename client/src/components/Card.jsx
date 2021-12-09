@@ -9,7 +9,7 @@ export default function Card({id,image,name,genres,rating}){
             <h3 className={style.title}>{name}</h3 >
             <img src={image} alt="" className={style.image}/>
             <p>{`Rating: ${rating}.`}</p>
-            <p>Genres: {Number.isInteger(id)? genres.join('-'):genres.map(g=>g.name).join(',')}.</p>
+            <p>Genres: {Number.isInteger(id)? genres.join(', '):genres.map(g=>g.name).join(', ')}.</p>
         </div></Link>
     )
 }

@@ -4,11 +4,6 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('genres', {
-/*     id:{
-      type: DataTypes.STRING,
-      allowNull:false,
-      primaryKey: true
-    }, */
     name: {
       type: DataTypes.ENUM(
         'Action',
@@ -31,12 +26,7 @@ module.exports = (sequelize) => {
         'Educational',
         'Card'),
       allowNull: false,
-    },
-/*     games: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: false,
-    }, */
-    
+    },  
   },
   {
     timestamps: false

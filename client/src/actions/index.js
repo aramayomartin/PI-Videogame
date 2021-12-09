@@ -40,16 +40,6 @@ export function cleanAll(){
 
 
 
-/* export function cleanDetail(){
-    return function(dispatch){
-        return dispatch({
-            type:'CLEAN_DETAIL',
-        })
-    }
-} */
-
-
-
 export function createVideogame(newVideogame){
     return async function(dispatch){
         await axios.post('http://localhost:3001/videogame',newVideogame)
